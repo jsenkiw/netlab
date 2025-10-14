@@ -1,0 +1,16 @@
+
+{
+  "name": "cisco/iosvl2",
+  "description": "IOSv L2 image",
+  "versions": [
+    {
+      "version": "15.2",
+      "providers": [
+        {
+          "name": "libvirt",
+          "url": "file:///opt/images/iosvl2.box"
+        }
+      ]
+    }
+  ]
+}

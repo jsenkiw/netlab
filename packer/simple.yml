@@ -1,0 +1,9 @@
+---
+defaults.providers.libvirt.forwarded:
+  ssh: 2000
+
+defaults.device: iosv 
+module: [ ospf ]
+
+nodes: [ r1, r2 ]
+links: [ r1, r2, r1-r2 ]

@@ -1,0 +1,16 @@
+
+{
+  "name": "arista/veos",
+  "description": "Arista vEOS VM or cEOS container",
+  "versions": [
+    {
+      "version": "4.31.2F",
+      "providers": [
+        {
+          "name": "libvirt",
+          "url": "file:///opt/images/eos.box"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+
+{
+  "name": "cisco/iosv",
+  "description": "Cisco IOSv",
+  "versions": [
+    {
+      "version": "15.7-3.M3",
+      "providers": [
+        {
+          "name": "libvirt",
+          "url": "file:///opt/images/iosv.box"
+        }
+      ]
+    }
+  ]
+}
