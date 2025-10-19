@@ -8,6 +8,8 @@ Useful Links:
 
 [**Open-Source BGP Configuration Labs**](https://bgplabs.net/)
 
+[**IP Space Netlab Examples**](https://github.com/ipspace/netlab-examples)
+
 For an overview of what NetLab can do and what technologies it uses refer to the online NetLab Documentation. 
 
 
@@ -33,7 +35,9 @@ Install the latest Ubuntu LTS 24.04 Distribution. The install will prompt to cre
 wsl --list --online
 wsl --install -d Ubuntu-24.04
 ```
-DNS Resolution on basic WSL install does not seem to function correctly so the */etc/wsl.conf* and */etc/systemd/resolved.conf* should be edited to include the following lines:
+### Optional: DNS Resolution Issue
+
+If DNS Resolution on WSL install does not function correctly */etc/wsl.conf* and */etc/systemd/resolved.conf* should be edited to include the following lines:
 
 ```
 sudo vi /etc/wsl.conf
@@ -140,7 +144,7 @@ Edit the *defaults.yml* file to use the cEOS image:
 
 ```
 cd bgplab
-sudo vi /defaults.yml
+sudo vi defaults.yml
 <...>
 device: eos
 provider: clab
@@ -182,6 +186,8 @@ Once you are finshed destroy the Lab.
 
 ```
 netlab down --cleanup
+exit
+wsl --shutdown
 ```
 
 You have now Installed Netlab on a Windows 10 client and deployed a basic topology with eos and frr nodes using the container virtualisation provider. 
