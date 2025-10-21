@@ -1,0 +1,16 @@
+
+{
+  "name": "cisco/csr1000v",
+  "description": "Cisco CSR 1000v",
+  "versions": [
+    {
+      "version": "16.6.1",
+      "providers": [
+        {
+          "name": "libvirt",
+          "url": "file:///opt/images/csr.box"
+        }
+      ]
+    }
+  ]
+}
