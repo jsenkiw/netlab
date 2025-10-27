@@ -20,6 +20,7 @@ sudo -u netlab git clone https://github.com/bgplab/bgplab.git /home/netlab/bgpla
 sudo -u netlab vagrant box add /opt/images/iosv-15.7-3.M3-box.json
 sudo -u netlab vagrant box add /opt/images/iosvl2-15.2-box.json
 sudo -u netlab vagrant box add /opt/images/eos-4.31.2F-box.json
+sudo -u netlab vagrant box add /opt/images/csr-16.6.1-box.json
 sudo -u netlab mkdir /home/netlab/initial
 sudo -u netlab cp /etc/openvpn/simple.yml /home/netlab/initial/topology.yml
 sudo -u netlab touch /home/netlab/.ssh/config
