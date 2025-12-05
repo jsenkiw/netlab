@@ -2,18 +2,18 @@
 
 Useful Links:
 
-[**NetLab Documentation**](https://netlab.tools/install/)
+[**Netlab Documentation**](https://netlab.tools)
 
-[**NetLab Blog**](https://blog.ipspace.net/tag/netlab/)
+[**Netlab Blog**](https://blog.ipspace.net/tag/netlab/)
 
 [**Open-Source BGP Configuration Labs**](https://bgplabs.net/)
 
 [**IP Space Netlab Examples**](https://github.com/ipspace/netlab-examples)
 
-For an overview of what NetLab can do and what technologies it uses refer to the online NetLab Documentation. 
+For an overview of what Netlab can do and what technologies it uses refer to the online Netlab Documentation. 
 
 
-## Building NetLab on Windows 10 Client
+## Building NetLab on Windows 11 Client
 
 **Local administration rights will be required on the Windows client.**
 
@@ -35,34 +35,8 @@ Install the latest Ubuntu LTS 24.04 Distribution. The install will prompt to cre
 wsl --list --online
 wsl --install -d Ubuntu-24.04
 ```
-### Optional: DNS Resolution Issue
 
-If DNS Resolution on WSL install does not function correctly */etc/wsl.conf* and */etc/systemd/resolved.conf* should be edited to include the following lines:
-
-```
-sudo vi /etc/wsl.conf
-<...>
-[network]
-generateResolvConf = false
-<...>
-
-sudo vi /etc/systemd/resolved.conf
-<...>
-[Resolve]
-DNS=8.8.8.8 8.8.4.4
-<...>
-```
-
-Restart WSL. 
-```
-wsl --shutdown
-wsl
-```
-Internet DNS resolution should now function correctly. 
-
-![DNS-Resolution](screenshots/wsl-dns-resolution.jpg)
-
-### Install NetLab on Ubuntu 24.04
+### Install Netlab on Ubuntu 24.04
 
 ```
 sudo apt update
@@ -75,28 +49,39 @@ sudo apt-get install -y python3-pip
 sudo pip3 install --ignore-installed --break-system-packages networklab
 sudo pip3 install --upgrade --break-system-packages  pyopenssl cryptography
 
-netlab install -y ubuntu ansible containerlab
+netlab install -y ubuntu ansible containerlab libvirt
 ```
-Add the userid to the docker group, logoff and logon again. Verify that NetLab has installed correctly with the containerlab virtualisation provider. 
+Add the userid to the docker + libvirt groups, logoff and logon again.
 ```
 id
 sudo usermod -aG docker <userid>
+sudo usermod -aG libvirt <userid>
 exit
-
 wsl
 id
-netlab test clab
 ```
+Verify that NetLab has installed correctly with the containerlab + libvirt virtualisation providers.
 
-The *netlab test* command should create and destory a network topology using docker frr containers. A successful Install message should be received once complete.
+```
+netlab test clab
+netlab test libvirt
+```
+The *netlab test* commands should create and destroy a network topology using docker frr containers during the clab test and bento/ubuntu-24.04 boxes during the libvirt test. 
+
+A successful *install* message should be received once complete.
 
 ![NetLAB-Success](screenshots/netlab-success.jpg)
 
-The frr docker image that was automatically download during the test run can be verified. 
+The docker and vagrant images that were automatically download during the test run can be verified. 
 
 ```
 docker image ls
 ```
+
+```
+vagrant box list
+```
+
 ### Installing Arista EOS Container
 
 Verify the default container image version of NetLab version of cEOS.
@@ -196,6 +181,32 @@ Due to limitations with Nested Virtualisation NetLab cannot utilise KVM/QEMU (li
 
 **Windows 11 Note: Although KVM/QEMU (libvirt) is available due to nested virtualisation being allowed I've encountered vagrant-libvirt issues which I'm attempting to resolve.**
 
+### Troubleshooting: DNS Resolution Issue
+
+If DNS Resolution on WSL install does not function correctly */etc/wsl.conf* and */etc/systemd/resolved.conf* should be edited to include the following lines:
+
+```
+sudo vi /etc/wsl.conf
+<...>
+[network]
+generateResolvConf = false
+<...>
+
+sudo vi /etc/systemd/resolved.conf
+<...>
+[Resolve]
+DNS=8.8.8.8 8.8.4.4
+<...>
+```
+
+Restart WSL. 
+```
+wsl --shutdown
+wsl
+```
+Internet DNS resolution should now function correctly. 
+
+![DNS-Resolution](screenshots/wsl-dns-resolution.jpg)
 
 ## Building NetLab in Azure Cloud
 
