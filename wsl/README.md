@@ -37,7 +37,7 @@ Ensure repositories are refeshed and installed packages are upgraded to latest v
 sudo apt update
 sudo apt-get upgrade -y
 ```
-Install Netlab with both the containerlab and libvirt virtualisation providers.
+Install Netlab.
 
 ```
 sudo apt-get install -y python3-pip
@@ -90,7 +90,7 @@ netlab test clab
 ```
 The *netlab test* command should create and destroy a network topology using bento/ubuntu-24.04 boxes during the libvirt test. 
 
-A successful *install* message should be received once complete.
+A successful *install* message should be received once complete. Refer to the refer [`Troubleshooting`](#troubleshooting) section if Vagrant fails to cleanup resources.
 
 ![LIBVIRT-Verify](libvirt-verify.jpg)
 
@@ -163,7 +163,7 @@ links: [ r1, r2, r1-r2 ]
 <...>
 :wq
 ```
-Launch the new topology and once is has been deployed check the management IPv4 addresses of the router instances and logon to instance r1.
+Launch the new topology and once is has been deployed check the management IPv4 addresses of the router instances and logon to router instance r1.
 
 ```
 netlab up
@@ -227,7 +227,7 @@ Internet DNS resolution should now function correctly.
 
 ### Vagrant Cleanup Issue
 
-If trhe enviornment variable *VAGRANT_WSL_ENABLE_WINDOWS_ACCESS* is not set before running the *netlab test libvirt* command vagrant may fail to cleanup resources even though the test is successful. If this happens then resources should be manually removed before re-running the command.   
+If trhe enviornment variable *VAGRANT_WSL_ENABLE_WINDOWS_ACCESS* is not set before running the *netlab test libvirt* command vagrant may fail to cleanup resources even though the test is successful. If this happens then resources should be manually removed before re-running the *netlab test libvirt* command.   
 
 ```
 virsh list
@@ -249,4 +249,18 @@ virsh net-destroy vagrant-libvirt
 virsh vol-delete test_s1.img --pool default
 virsh vol-delete test_s2.img --pool default
 virsh vol-delete test_s3.img --pool default
+```
+
+### SSH Conenctivity Issue
+
+SSH Ubuntu 24.04 client connectivity may fail with older virtual network images. This can be remedied through these additions to the ssh_config file.
+
+```
+cd ~
+vi .ssh/config
+<...>
+KexAlgorithms=+diffie-hellman-group-exchange-sha1
+HostKeyAlgorithms=+ssh-rsa
+<...>
+:wq
 ```
